@@ -1,0 +1,250 @@
+* Introduction
+** For java, all objects should be constructed in runtime and be stored in HEAP
+** Every object in java is the descendant of one class: Object
+* Class
+** Java Keywords
+   import
+   transient
+   instanceof
+   strictfp
+   volatile
+   finally
+   native
+   super
+   synchronized
+   goto
+   package
+   ...
+** Object Array
+   Members are handles
+** Assignment "from one object to another" 
+   is just to copy a handle from one place to another 
+   primitive types vs. object types, passing by value vs. by reference
+** Operators
+*** Relation operators == != can deal with any objects, but...
+    - n1=new Integer(47),n2=new Integer(47),n1.equals(n2)==true
+    - v1=new Value(),v2=new Value(),v1.i=v2.i=100,n1.equals(n2)==false
+** Garbage Collection: finalize()
+   - Not destruction in C++, only about memory
+   - ...
+** Order of Initialization
+   - Within a class, the order of initialization is determined by the order that the variables are defined within the class
+   - Static member is to be initialized in the loading of the class
+   - Explicit Static Initialization: static {}; has similarly syntax for non-static variables
+   - Before constructors are executed, all the primitives are wiped to their default values, and any initializations that occur at the point of field definition are executed
+** Class Access Rights
+   - Same package classes: friends
+   - protected: okay for children and friend classes
+   - friendly(default): okay for friends but not children
+   - There can be only one public class per compilation unit (file)
+   - The name of the public class must exactly match the name of the file
+   - When no public class at all, you can arbitrary name the file
+** Inheritance
+   - If no explicit arguments are passed to base class, its default ctor will be called
+   - In derived class, use "super" to call base class' ctor and pass value to it
+   - Overload (name hide?): when defining a method that has the same name as one in superclass (or the same class) but different parameter list
+   - Override (rewrite): when the method written in sub class has the same name AND parameter list with that in super class
+   - When invoking primitive type parameters in method overriding, there might be an upcast
+   - Initialization order: base class static field->sub class static field->ctors or others
+   - Default dynamic binding of methods: except final,static,private
+** Final
+*** Final Methods
+   - To put a lock on the method to prevent any inheriting class from changing its meaning
+   - The compiler is to turn any calls to that method into inline calls
+   - private is final
+*** Final Classes
+    - You don’t want to inherit from this class or allow anyone else to do so
+** Abstract class & interface
+   - All methods in interface are public
+   - All data members in interface are public static final
+   - To define an interface:
+     public interface interfaceName extends BaseInterfaces
+   - An interface can inherit from more than one interfaces, but not class
+   - A class can implement more than one interfaces
+** TODO Innerclass
+   - As a member, the inner class can access everything of its outer class 
+   - Overriding innerclass
+   - TODO: more on innerclass...
+** (Enums)
+   Not required
+* Container
+** Set
+   - HashSet
+   - TreeSet
+** List
+   - array
+   - ArrayList
+   - LinkedList
+   - Vector
+** Map
+   - TreeMap
+   - HashMap
+   - HashTable
+** for-each & Iterator
+* TODO Generic
+   - If Foo is a subtype (subclass or subinterface) of Bar, and G is some generic type declaration, it is not the case that G<Foo> is a subtype of G<Bar>
+   - Wildcards: Collection<?> c
+   - TODO : pitfalls of wildcards
+   - Bounded Wildcards: List<? extends Shape> shapes
+   - All types (except enums, anonymous inner classes and Exception classes) can have generic parameters (one or several)
+   - T cannot be used to create object or array, be as parent class, in instanceof...and may not be specified a type
+   - TODO : Generic in Thinking in JAVA
+   ** Library
+   - java.lang is automatically imported, contains lots of classes and three interfaces: Clonable, Runnable and Comparable
+* Library
+** TODO String 
+    - is immutable
+    - identity vs. equality ("==" vs. "equals()")
+    - TODO : ".intern()"
+    - For Short and Integer in the range of -128 to 127, and char in the range of \u0000 to \u007f, there are fixed value objects: true to Integer.valueOf(3)==Integer.valueOf(3), but false to Integer.valueOf(129)==Integer.valueOf(129)
+    - Comparing Characters and Strings: c1<c2, s1.compareTo(s2) which is lexicographical
+    - String in switch-case (Java 1.8)
+** StringBuffer
+    - ".length()" vs. ".capacity()"
+    - It's more efficient to specify the length of the buffer cuz its default ctor may leaves the buffer's length undetermined
+    - Cannot use operator '+' to concatenate
+* Exception
+** Basic Format
+   if (t==null) throw new NullPointerException();
+   or
+   throw new NullPointerException("t==null");
+** Details
+   - The exception specification: may claim to throw an exception that you really don't
+   - Re-throw is allowed
+   - Exception restrictions: when overriding a method, you can only throw the exceptions that have been specified in the base-class version of the method
+** Interface: throwable
+   - String getMessage()
+   - String toString()
+   - void printStackTrace()
+   - void printStackTrace(PrintStream)
+** RuntimeException extends Exception extends Throwable
+   - Error extends Throwable
+   - Don't have to declare if your method may throw a RuntimeException, but performing cleanup with "finally" is recommended
+* IO Stream
+** For Binary Files
+    Use input/output streams
+** For Local Char Coding Text Files
+    Use LineNumberReader/PrintWriter based on Input/OutputStream:
+    PrintWriter pw = new PrintWriter( 
+      new BufferedWriter(
+        new OutputStreamWriter(
+          new FileOutputStream(“abc.txt”)));
+** For Unicode Char Text Files
+    Use FileReader/FileWriter directly
+** TODO Object Serialization
+* GUI
+** Components
+*** The Menus
+    Object
+    - Component
+      - Container
+        - JComponent
+          - JMenuBar
+          - JPopupMenu
+          - JSeparator
+          - JAbstractButton
+            - JMenuItem
+              - JMenu
+              - JCheckBoxMenuItem
+              - JRadioButtonMenuItem
+*** Dialog
+**** Every dialog is dependent on a frame
+**** The JDialog that JOptionPane creates are modal
+     JOptionPane.showMessageDialog(frame,...,JOptionPane.INFORMATION_MESSAGE);
+**** To create a non-modal dialog, you must use the JDialog class directly
+*** (Image)
+**** ImageViewer
+     Sets up the GUI structure
+**** ImageFileManager
+     Static methods for image file loading and saving -> give to OFImage
+**** ImagePanel
+     Displays the image within the GUI
+**** OFImage
+     Models a 2D image
+**** Image Filter
+** Events
+   - Frames are associated with WindowEvent 
+   - Menus are associated with ActionEvent
+** TODO Others
+*** IOC 线程通知
+*** MVC
+* Thread
+** Every object can have a thread pool; A thread can call wait() to join the pool and call notify() to leave the pool
+** TODO Create a Thread : SAMPLE CODE
+** Nested synchronized is safe
+** Condition
+*** (The ArrayBlockingQueue class provides this functionality, so there is no reason to implement this sample usage class.)
+ class BoundedBuffer {
+   final Lock lock = new ReentrantLock();
+   final Condition notFull  = lock.newCondition(); 
+   final Condition notEmpty = lock.newCondition(); 
+
+   final Object[] items = new Object[100];
+   int putptr, takeptr, count;
+
+   public void put(Object x) throws InterruptedException {
+     lock.lock();
+     try {
+       while (count == items.length)
+         notFull.await();
+       items[putptr] = x;
+       if (++putptr == items.length) putptr = 0;
+       ++count;
+       notEmpty.signal();
+     } finally {
+       lock.unlock();
+     }
+   }
+
+   public Object take() throws InterruptedException {
+     lock.lock();
+     try {
+       while (count == 0)
+         notEmpty.await();
+       Object x = items[takeptr];
+       if (++takeptr == items.length) takeptr = 0;
+       --count;
+       notFull.signal();
+       return x;
+     } finally {
+       lock.unlock();
+     }
+   }
+ } 
+
+** Semaphore
+   - .acquire()
+   - .release()
+* (Socket)
+* RTTI
+** Class Object
+*** public boolean equals(Object x){...}
+    Default in Object: to compare reference
+*** public String toString(){...}
+    Default in Object: to show [name of the Class]@[address of the Object in memory]
+*** public Class getClass(Object x){...}
+    - Should never be overridden in any derived class of Object
+    - If (*.equals(*.class)){...}
+*** public int hashCode(){...}
+*** protected Object clone(Object x){...}
+    Important rules when overriding clone() in a class:
+    - (Virtually) Always call super.clone(), the base class clone() method performs the bitwise duplication of the derived class object. (If the attributes are all primitive types it is safe to not call super.)
+    - Make your clone() method public
+    - Implement the Cloneable interface: if (myReference instanceof Cloneable){...}
+      (Cloneable is an "empty interface" with no methods to implement)
+      
+    Some Java Library classes are not cloneable:
+    - Wrapper Classes
+    - String and StringBuffer
+    - Standard Containers only perform a shallow copy
+*** public void wait(){...}
+*** public void notify(){...}
+** RTTI
+   - Class.forName("..."): each time you write a new class, a single Class object is also created
+   - Class literals also provide a reference to the Class object
+   - Each object of a primitive wrapper class has a standard field called TYPE that also provides a reference to the Class object
+   - Class.isInstance(obj) vs. obj instanceof Class
+   - Class c=x.getClass() -> c==Circle.class, x.isInstance(Circle.class)
+*** (Reflection)
+    - Get field value
+    - Invoke Method
