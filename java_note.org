@@ -85,14 +85,12 @@
 * TODO Generic
    - If Foo is a subtype (subclass or subinterface) of Bar, and G is some generic type declaration, it is not the case that G<Foo> is a subtype of G<Bar>
    - Wildcards: Collection<?> c
-   - TODO : pitfalls of wildcards
    - Bounded Wildcards: List<? extends Shape> shapes
    - All types (except enums, anonymous inner classes and Exception classes) can have generic parameters (one or several)
    - T cannot be used to create object or array, be as parent class, in instanceof...and may not be specified a type
-   - TODO : Generic in Thinking in JAVA
-   ** Library
-   - java.lang is automatically imported, contains lots of classes and three interfaces: Clonable, Runnable and Comparable
+   - The component type of an array object may not be a type variable or a parameterized type, unless it is an (unbounded) wildcard type Type variable no longer exists in compile time
 * Library
+   - java.lang is automatically imported, contains lots of classes and three interfaces: Clonable, Runnable and Comparable
 ** String 
     - is immutable
     - identity vs. equality ("==" vs. "equals()")
