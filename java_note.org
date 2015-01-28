@@ -23,7 +23,7 @@
 ** Operators
 *** Relation operators == != can deal with any objects, but...
     - n1=new Integer(47),n2=new Integer(47),n1.equals(n2)==true
-    - v1=new Value(),v2=new Value(),v1.i=v2.i=100,n1.equals(n2)==false
+    - v1=new Value(),v2=new Value(),v1.i=v2.i=100,v1.equals(v2)==false
 ** Garbage Collection: finalize()
    - Not destruction in C++, only about memory
    - ...
@@ -92,10 +92,10 @@
    ** Library
    - java.lang is automatically imported, contains lots of classes and three interfaces: Clonable, Runnable and Comparable
 * Library
-** TODO String 
+** String 
     - is immutable
     - identity vs. equality ("==" vs. "equals()")
-    - TODO : ".intern()"
+    - ".intern()"
     - For Short and Integer in the range of -128 to 127, and char in the range of \u0000 to \u007f, there are fixed value objects: true to Integer.valueOf(3)==Integer.valueOf(3), but false to Integer.valueOf(129)==Integer.valueOf(129)
     - Comparing Characters and Strings: c1<c2, s1.compareTo(s2) which is lexicographical
     - String in switch-case (Java 1.8)
@@ -112,7 +112,7 @@
    - The exception specification: may claim to throw an exception that you really don't
    - Re-throw is allowed
    - Exception restrictions: when overriding a method, you can only throw the exceptions that have been specified in the base-class version of the method
-** Interface: throwable
+** Base Class: Throwable
    - String getMessage()
    - String toString()
    - void printStackTrace()
