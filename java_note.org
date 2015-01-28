@@ -1,7 +1,7 @@
-* Introduction
-** For java, all objects should be constructed in runtime and be stored in HEAP
-** Every object in java is the descendant of one class: Object
 * Class
+** Introduction
+   - For java, all objects should be constructed in runtime and be stored in HEAP
+   - Every object in java is the descendant of one class: Object
 ** Java Keywords
    import
    transient
@@ -68,9 +68,10 @@
 ** (Enums)
    Not required
 * Container
+  Subclasses of Collections
 ** Set
-   - HashSet
-   - TreeSet
+  - HashSet
+  - TreeSet
 ** List
    - array
    - ArrayList
@@ -131,7 +132,13 @@
           new FileOutputStream(“abc.txt”)));
 ** For Unicode Char Text Files
     Use FileReader/FileWriter directly
-** TODO Object Serialization
+** Object Serialization
+   - ObjectOutputStream: public final void writeObject(Object x) throws IOException
+   - ObjectInputStream: public final Object readObject() throws IOException, ClassNotFoundException
+*** Any Object to be serialized should:
+    - Implements java.io.serializable
+    - All variable in its field (attributes) should be serializable
+    - If not, it must be declared as transient
 * GUI
 ** Components
 *** The Menus
@@ -169,6 +176,9 @@
 *** IOC 线程通知
 *** MVC
 * Thread
+** run method
+   - Thread implements Runnable
+   - If this thread was constructed using a separate Runnable run object, then that Runnable object's run method is called; otherwise, this method does nothing and returns.
 ** Every object can have a thread pool; A thread can call wait() to join the pool and call notify() to leave the pool
 ** TODO Create a Thread : SAMPLE CODE
 ** Nested synchronized is safe
@@ -191,7 +201,7 @@
        if (++putptr == items.length) putptr = 0;
        ++count;
        notEmpty.signal();
-     } finally {
+     } finally { //happens everytime
        lock.unlock();
      }
    }
